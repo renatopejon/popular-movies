@@ -27,6 +27,10 @@
     box-shadow: var(--shadow);
 }
 
+.movie-card .movie-thumb img:hover {
+    transform: scale(1.2);
+}
+
 .movie-info {
     display: flex;
     align-items: center;
