@@ -1,0 +1,51 @@
+header {
+    text-align: center;
+}
+
+h1 {
+    color: #FFFFFF;
+    font-size: 36px;
+    font-weight: 600;
+    padding: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.search-field {
+    width: 40vw;
+    padding: 1.3rem;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    background-color: #454558;
+    color: #FFFFFF;
+}
+
+.search-field::placeholder {
+    font-size: 14px;
+    font-weight: 500;
+    color: #8A8A8A;
+    font-family: 'Kumbh Sans', sans-serif;
+}
+  
+.search-button {
+    background: transparent;
+    border: none;
+    outline: none;
+    margin-left: -33px;
+    cursor: pointer;
+}
+  
+.search-button img {
+    width: 18px;
+    height: 18px;
+    margin-top: 0.8em;
+    object-fit: cover;
+}
+
+
+
+
