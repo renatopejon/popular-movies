@@ -1,8 +1,4 @@
-const config = {
-    api_key: '3851a9c055b4040356f6ef865d1d56a6',
-    api_base_url: 'https://api.themoviedb.org/3/',
-    image_base_url: 'https://image.tmdb.org/t/p/w1280'
-}
+import { config } from "./config.js";
 
 const baseUrl = config.api_base_url
 const apiKey = config.api_key
@@ -41,18 +37,16 @@ async function getPopularMovies(page = 1) {
         const response = await fetch(`${baseUrl}movie/popular?api_key=${apiKey}&page=${page}`)
         const responseData = await response.json()
         data = responseData.results
-        console.log(data);
     } catch (error) {
         console.log('O erro é: ', error)
     }
     return data
 }
 
-getPopularMovies()
 
-
-window.onload = function() {
-    getPopularMovies().forEach(movie => getMovies(movie))
+window.onload = async function() {
+    const movies = await getPopularMovies()
+    movies.forEach(movie => getMovies(movie))
 }
 
 function getMovies(movie) {
