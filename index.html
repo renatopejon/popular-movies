@@ -14,12 +14,12 @@
 <body>
     <header>
         <h1>Filmes Populares</h1>
-        <form action="/" method="GET" class="form">
-            <input type="search" class="search-field" placeholder="Digite algum filme para pesquisar...">
+        <div class="search-container">
+            <input type="text" class="search-field" id="search-field" placeholder="Digite algum filme para pesquisar...">
             <button type="submit" class="search-button">
-                <img src="img/Lupa.svg" alt="Search button">
+                <img src="img/Lupa.svg" alt="Search button" class="search-icon">
             </button>
-        </form>
+        <div>
         
         <label class="checkbox">
             <input type="checkbox"> 
@@ -27,32 +27,7 @@
         </label>
     </header>
 
-    <main id="main">
-        <!--
-        <div class="movie-card">
-            <div class="movie-info">
-                <div class="movie-thumb">
-                    <img src="img/Avengers.svg" alt="The Avengers">
-                </div>
-                <div class="movie-name">
-                    <h3>Avengers Endgame (2019)</h3>
-                    <div class="rating-fav">
-                        <div class="rating">
-                            <img src="img/Star.svg" alt="Imagem de uma estrela">
-                            <span class="movie-rating">9.2</span> 
-                        </div>
-                        <div class="favorite">
-                            <img src="img/Heart.svg" alt="Imagem de um coração">
-                            <span class="fav-span">Favoritar</span>
-                        </div>
-                    </div> 
-                </div>   
-            </div>
-            <div class="movie-desc">
-                <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span>
-            </div>
-        </div>
-        -->
+    <main id="main" class="main">
         
     </main>
     <script src="script.js" type="module"></script>

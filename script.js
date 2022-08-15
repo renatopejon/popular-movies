@@ -3,17 +3,48 @@ import { config } from "./configs/config.js";
 const baseUrl = config.api_base_url
 const apiKey = config.api_key
 const imageUrl = config.image_base_url
+const main = document.querySelector('.main')
+const searchBtn = document.querySelector('.search-icon')
+const input = document.querySelector('.search-field')
+
+
+searchBtn.addEventListener('click', searchMovies)
 
 async function getPopularMovies(page = 1) {
     let data = []
     try {
-        const response = await fetch(`${baseUrl}movie/popular?api_key=${apiKey}&page=${page}`)
+        const response = await fetch(`${baseUrl}movie/popular?api_key=${apiKey}&language=pt-BR&page=${page}`)
         const responseData = await response.json()
         data = responseData.results
     } catch (error) {
         console.log('O erro é: ', error)
     }
     return data
+}
+
+async function searchMoviesTitle(query) {
+    let data = []
+    try {
+        const response = await fetch(`${baseUrl}search/movie?api_key=${apiKey}&language=pt-BR&query=${query}&page=1`)
+        const responseData = await response.json()
+        data = responseData.results
+    } catch (error) {
+        console.log('O erro é: ', error)
+    }
+    return data
+}
+
+async function searchMovies() {
+    const searchValue = input.value
+    if (searchValue != '') {
+        cleanMovies()
+        const movies = await searchMoviesTitle(searchValue)
+        movies.forEach(movie => getMovies(movie))
+    }
+}
+
+function cleanMovies() {
+    main.innerHTML = ''
 }
 
 window.onload = async () => {
@@ -23,8 +54,6 @@ window.onload = async () => {
 
 function getMovies(movie) {
     const { original_title, backdrop_path, vote_average, release_date, overview, isFavorited } = movie
-
-    const main = document.getElementById('main')
 
     const movieCard = document.createElement('div')
     movieCard.classList.add('movie-card')
@@ -88,7 +117,7 @@ function getMovies(movie) {
     movieSpan.innerText = overview
     movieDesc.appendChild(movieSpan)
 }
-    
+
 
 
    
