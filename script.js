@@ -7,7 +7,6 @@ const main = document.querySelector('.main')
 const searchBtn = document.querySelector('.search-icon')
 const input = document.querySelector('.search-field')
 
-
 searchBtn.addEventListener('click', searchMovies)
 
 input.addEventListener('keypress', function(event) {
@@ -52,6 +51,20 @@ async function searchMovies() {
 
 function cleanMovies() {
     main.innerHTML = ''
+}
+
+function favButtonPress(event, movie) {
+    const favoriteState = {
+        favorited: 'img/Full-heart.svg',
+        notFavorited: 'img/Heart.svg'
+    }
+
+    if (event.target.src.includes(favoriteState.notFavorited)) {
+        event.target.src = favoriteState.favorited
+        alert(movie)
+    } else {
+        event.target.src = favoriteState.notFavorited
+    }
 }
 
 window.onload = async () => {
@@ -109,6 +122,8 @@ function getMovies(movie) {
     
     const heartImg = document.createElement('img')
     heartImg.setAttribute('src', isFavorited ? 'img/Full-heart.svg' : 'img/Heart.svg')
+    heartImg.classList.add('fav-img')
+    heartImg.addEventListener('click', favButtonPress)
     favorite.appendChild(heartImg)
 
     const favSpan = document.createElement('span')
@@ -124,7 +139,3 @@ function getMovies(movie) {
     movieSpan.innerText = overview
     movieDesc.appendChild(movieSpan)
 }
-
-
-
-   
