@@ -10,6 +10,13 @@ const input = document.querySelector('.search-field')
 
 searchBtn.addEventListener('click', searchMovies)
 
+input.addEventListener('keypress', function(event) {
+    if (event.key == 'Enter') {
+        event.preventDefault()
+        searchBtn.click()
+    }
+})
+
 async function getPopularMovies(page = 1) {
     let data = []
     try {
