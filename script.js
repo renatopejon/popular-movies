@@ -1,7 +1,7 @@
 import { config } from "./configs/config.js";
+import { API } from "./services/api.js"
+import { LocalStorage } from "./services/localStorage.js";
 
-const baseUrl = config.api_base_url
-const apiKey = config.api_key
 const imageUrl = config.image_base_url
 const main = document.querySelector('.main')
 const searchBtn = document.querySelector('.search-icon')
@@ -19,59 +19,13 @@ input.addEventListener('keypress', function(event) {
 
 checkBox.addEventListener('click', showFav)
 
-async function getPopularMovies() {
-    let data = []
-    try {
-        const response = await fetch(`${baseUrl}movie/popular?api_key=${apiKey}&language=pt-BR&page=1`)
-        const responseData = await response.json()
-        data = responseData.results
-    } catch (error) {
-        console.log('O erro é: ', error)
-    }
-    return data
-}
-
-async function searchMoviesTitle(query) {
-    let data = []
-    try {
-        const response = await fetch(`${baseUrl}search/movie?api_key=${apiKey}&language=pt-BR&query=${query}&page=1`)
-        const responseData = await response.json()
-        data = responseData.results
-    } catch (error) {
-        console.log('O erro é: ', error)
-    }
-    return data
-}
-
-async function searchMoviesId(id) {
-    let data = []
-    try {
-        const response = await fetch(`${baseUrl}movie/${id}?api_key=${apiKey}&language=pt-BR`)
-        const responseData = await response.json()
-        data = responseData
-    } catch (error) {
-        console.log('O erro é: ', error)
-    }
-    return data
-}
-
 async function searchMovies() {
     const searchValue = input.value
     if (searchValue != '') {
         cleanMovies()
-        const movies = await searchMoviesTitle(searchValue)
+        const movies = await API.searchMoviesTitle(searchValue)
         movies.forEach(movie => getMovies(movie))
     }
-}
-
-async function renderFav() {
-    cleanMovies()
-    const favArr = getFav() || []
-    favArr.forEach(async (id) => {
-        let idNum = Number(id)
-        const movie = await searchMoviesId(idNum)
-        getMovies(movie)
-    })
 }
 
 function cleanMovies() {
@@ -79,6 +33,7 @@ function cleanMovies() {
 }
 
 function favButtonPress(event) {
+    const favSpan = document.querySelector('div.favorite > span')
     const favoriteState = {
         fav: 'img/Full-heart.svg',
         notFav: 'img/Heart.svg'
@@ -86,33 +41,13 @@ function favButtonPress(event) {
 
     if (event.target.src.includes(favoriteState.notFav)) {
         event.target.src = favoriteState.fav
-        saveFav(event.target.id)
+        favSpan.innerText = 'Desfavoritar'
+        LocalStorage.saveFav(event.target.id)
     } else {
         event.target.src = favoriteState.notFav
-        removeFav(event.target.id)
+        favSpan.innerText = 'Favoritar'
+        LocalStorage.removeFav(event.target.id)
     }
-}
-
-function saveFav(id) {
-    const favArr = getFav() || []
-    if (!favArr.includes(id)) {
-        favArr.push(id)
-        const favArrJSON = JSON.stringify(favArr)
-        localStorage.setItem('favMovies', favArrJSON)
-    }
-}
-
-function removeFav(id) {
-    const favArr = getFav() || []
-    if (favArr.includes(id)) {
-        const newFavArr = favArr.filter(i => i !== id)
-        const newFavArrJSON = JSON.stringify(newFavArr)
-        localStorage.setItem('favMovies', newFavArrJSON)
-    }
-}
-
-function getFav() {
-    return JSON.parse(localStorage.getItem('favMovies'))
 }
 
 function showFav() {
@@ -124,13 +59,18 @@ function showFav() {
     }
 }
 
-function checkFav(id) {
-    const favArr = getFav() || []
-    return favArr.includes(`${id}`)
+async function renderFav() {
+    cleanMovies()
+    const favArr = LocalStorage.getFav() || []
+    favArr.forEach(async (id) => {
+        let idNum = Number(id)
+        const movie = await API.searchMoviesId(idNum)
+        getMovies(movie)
+    })
 }
 
 async function getAllPopularMovies() {
-    const movies = await getPopularMovies()
+    const movies = await API.getPopularMovies()
     movies.forEach(movie => getMovies(movie))
 }
 
@@ -187,7 +127,7 @@ function getMovies(movie) {
     ratingFav.appendChild(favorite)
     
     const heartImg = document.createElement('img')
-    heartImg.setAttribute('src', checkFav(id) ? 'img/Full-heart.svg' : 'img/Heart.svg')
+    heartImg.setAttribute('src', LocalStorage.checkFav(id) ? 'img/Full-heart.svg' : 'img/Heart.svg')
     heartImg.setAttribute('id', `${id}`)
     heartImg.classList.add('fav-img')
     heartImg.addEventListener('click', favButtonPress)
@@ -195,7 +135,7 @@ function getMovies(movie) {
 
     const favSpan = document.createElement('span')
     favSpan.classList.add('favorite')
-    favSpan.innerText = 'Favoritar'
+    favSpan.innerText = LocalStorage.checkFav(id) ? 'Desavoritar' : 'Favoritar'
     favorite.appendChild(favSpan)
 
     const movieDesc = document.createElement('div')
