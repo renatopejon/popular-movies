@@ -1,6 +1,6 @@
-import { config } from "./configs/config.js";
-import { API } from "./services/api.js"
-import { LocalStorage } from "./services/localStorage.js";
+import { config } from "../configs/config.js";
+import { API } from "../services/api.js"
+import { LocalStorage } from "../services/localStorage.js";
 
 const imageUrl = config.image_base_url
 const main = document.querySelector('.main')
