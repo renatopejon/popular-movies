@@ -20,7 +20,7 @@ Project developed while doing the #7DaysOfCode challenge by [Alura](https://www.
 
 1. Download all files and open the index.html file with a browser or;
 
-2. Access through the GitHub Pages link: https://renatopejon.github.io/popular-movies/
+2. Access through the GitHub Pages link: https://popular-movies-one.vercel.app/
 
 <!-- ## GIF from the project:
 <p align="center">
