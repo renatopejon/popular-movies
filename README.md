@@ -20,9 +20,9 @@ Project developed while doing the #7DaysOfCode challenge by [Alura](https://www.
 
 1. Download all files and open the index.html file with a browser or;
 
-2. Access through the GitHub Pages link: https://doguinhos-bootstrap-alpha.vercel.app/
+2. Access through the GitHub Pages link: https://renatopejon.github.io/popular-movies/
 
-## GIF from the project:
+<!-- ## GIF from the project:
 <p align="center">
-  <img  src="https://user-images.githubusercontent.com/47367373/185237689-cbcc4054-75a2-4020-bcf8-5cd705322d3e.gif" alt="Dogs App"/>
-</p>
+  <img  src="" alt=""/>
+</p> -->
